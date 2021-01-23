@@ -23,7 +23,7 @@ const Home: React.FC = () => {
         <div>
           <a href="https://github.com/sobreirami/" target="_blank"><FiGithub /></a>
           <a href="https://www.linkedin.com/in/michel-rodrigues-85a1bb58/" target="_blank"><FiLinkedin /></a>
-          <a href="#"><FaMediumM /></a>
+          <a href="https://medium.com/@Sobreira" target="_blank"><FaMediumM /></a>
           <a href="https://www.instagram.com/sobreirami/" target="_blank"><FiInstagram /></a>
         </div>
       </Card>
