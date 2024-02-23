@@ -9,7 +9,7 @@ image: '/static/images/posts/5-licoes-que-aprendi-no-meu-ultimo-trabalho-capa.we
 
 No mundo da engenharia de software, há sempre lições a serem aprendidas em cada projeto que passamos. A ideia aqui é compartilhar algumas delas que considero essenciais. Estes aprendizados não apenas moldaram meu trabalho recente, mas também guiarão minhas práticas futuras.
 
-## 1. Crescimento Sustentável: A Base para o Sucesso
+## 1. Crescimento Sustentável
 
 Passamos por um período de crescimento exponencial na empresa, especialmente na equipe de engenharia. No entanto, esse crescimento se provou ser um desafio. A estrutura básica não estava preparada para suportar a demanda. Questões como a falta de integração entre setores, alocação inadequada de recursos e indefinições sobre tarefas foram obstáculos recorrentes.
 
