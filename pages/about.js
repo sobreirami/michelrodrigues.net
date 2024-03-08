@@ -112,7 +112,7 @@ function About(props) {
       end: endDate ? parseISO(endDate) : new Date(),
     })
 
-    let durationStr = '1 mês '
+    let durationStr = ''
 
     if (durationObj.years > 1) {
       durationStr = `${durationObj.years} anos `
