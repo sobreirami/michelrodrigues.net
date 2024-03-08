@@ -1,10 +1,17 @@
 const items = [
   {
+    jobTitle: 'Senior Software Enginner',
+    company: 'Capim',
+    companyUrl: 'https://capim.com.br',
+    startDate: '2024-03-01',
+    location: 'São Paulo, Brasil',
+  },
+  {
     jobTitle: 'Front Lead Software Engineer',
     company: 'TC',
     companyUrl: 'https://tc.com.br',
     startDate: '2022-06-01',
-    endDate: '2023-02-02',
+    endDate: '2024-02-02',
     location: 'São Paulo, Brasil',
   },
   {

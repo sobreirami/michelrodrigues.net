@@ -96,7 +96,7 @@ function About(props) {
             <span>
               {item.endDate
                 ? format(parseISO(item.endDate), 'LLL yyyy')
-                : 'Present'}
+                : 'O momento'}
             </span>
             <span> • </span>
             <span>{getDuration(item.startDate, item.endDate)}</span>
@@ -112,7 +112,7 @@ function About(props) {
       end: endDate ? parseISO(endDate) : new Date(),
     })
 
-    let durationStr = ''
+    let durationStr = '1 mês '
 
     if (durationObj.years > 1) {
       durationStr = `${durationObj.years} anos `
