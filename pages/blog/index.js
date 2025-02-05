@@ -22,7 +22,7 @@ export async function getStaticProps() {
 
   const featuredPosts = [
     getPostBySlug(
-      '5-licoes-que-aprendi-no-meu-ultimo-trabalho',
+      'migrando-uma-aplicacao-de-grande-porte-do-vue3-para-o-vite',
       featuredParams
     ),
   ]
@@ -65,7 +65,7 @@ function Blog(props) {
           <ListItem
             key={index}
             index={index}
-            href={`/${post.slug}/`}
+            href={`/blog/${post.slug}/`}
             title={post.title}
             date={post.date}
           />
