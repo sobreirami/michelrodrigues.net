@@ -22,29 +22,28 @@ Toda a aplicação hoje roda em um monólito, com uma base de código bem grande
 
 - O tempo de build era muito longo.
 - O live-reload era demorado e recarregava a tela inteira.
-- Executar todos os testes de unidade localmente era inviável, mesmo em máquinas com 32 GB de RAM, pois travava completamente o sistema.
+- Executar todos os testes de unidade localmente era inviável, mesmo em máquinas mais fortes demorava muito. Temos mais de 6k de testes só de unidade.
 
 ### Como conheci o vite?
 
-Procurando como resolver os problemas já citados encontrei o Vite é uma ferramenta de build para aplicações front-end. E segundo sua própria documentação abre aspas `O nome vem do francês "vite", que significa rápido`, e foi exatamente o que me pareceu.
+Procurando como resolver os problemas já citados encontrei o `Vite` é uma ferramenta de build para aplicações front-end. E segundo sua própria documentação abre aspas `O nome vem do francês "vite", que significa rápido`, e foi exatamente o que me pareceu.
 Foi criado para resolver problemas comuns enfrentados em projetos grandes, especialmente aqueles que dependem de ferramentas de bundling mais antigas, como `Webpack`.
 
-#### Principais benefícios
+#### **Principais benefícios**
 1. Build mais rápido e eficiente
 2. O `Vite` utiliza uma abordagem diferente para construir e servir o projeto. Durante o desenvolvimento, ele não `empacota` toda a aplicação em um único arquivo como o Webpack. Em vez disso, ele carrega módulos de forma incremental usando o `ES Modules` nativo do navegador.
 
-#### Então resumindo, iriamos resolver exatamente os dois problemas
+**Primeiro problema: Build muito longo:**
+1. O tempo de build diminuiria drasticamente.
 
-**Build era muito longo:**
-1. O tempo de build inicial diminui drasticamente.
-2. Alterações no código refletem quase instantaneamente no navegador.
+**Segundo problema: Experiência de desenvolvimento:**
 
-**Melhor experiência com live-reload:**
-Diferentemente de outras ferramentas, o `Vite` faz `Hot Module Replacement (HMR)` em nível de módulo. Isso significa que apenas os módulos alterados são atualizados no navegador, sem a necessidade de recarregar toda a página.
+Diferentemente de outras ferramentas, o `Vite` faz `Hot Module Replacement (HMR)` em nível de módulo. Isso significa que apenas os módulos alterados são atualizados no navegador, sem a necessidade de recarregar toda a página, ou seja, alterações no código seriam refletidas quase instantaneamente no navegador.
 
-#### **O que iriamos ganhar**
 1. Feedback instantâneo enquanto codamos.
 2. Fluxo de trabalho mais produtivo e menos frustrante.
+
+#### Então resumindo, iriamos resolver exatamente os dois problemas
 
 ### Apresentando o Vite para o time de engenharia
 
@@ -59,14 +58,14 @@ Falta de artigos sobre migração em projetos reais principalmente de grande por
 
 ### Plano de migração
 
-Após entender o funcionamento do `Vite` e criar algumas POC`s, deixo aqui alguns dos artigos, posts que me ajudam:
+Após entender o funcionamento do `Vite` e criar algumas POC`s, deixo aqui alguns dos artigos, posts que me ajudaram:
 
 - https://vite.dev/guide/
 - https://srivastavaankita080.medium.com/vue-cli-vite-migration-e1aba37e649d
 - https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/
 
 
-Então, dividi a migração em diversas tasks, todas apontadas para uma branch base.
+Dividi então a migração em diversas tarefas menores, todas apontadas para uma branch base.
 
 #### **Corrigir imports sem .vue**
 
@@ -79,16 +78,17 @@ import HelloWorld from components/HelloWorld.vue
 
 #### **Ajustar imports com require**
 
-Imports com `require` não são suportados no `Vite`, então precisei atualizá-los para o padrão ES Modules.
+Imports com `require` não são suportados no `Vite`, então precisei atualizá-los para o padrão `ES Modules`.
 
 #### **Separar libs externas**
 
 Arquivos de bibliotecas gerados por terceiros foram movidos para a pasta public e importados globalmente com tags `<script>`.
 
-Passo importante para evitar erros no build ou alertas. Uma observação adicional, sobre esse passo, isso é um
-projeto real, que passou por diversos momentos e alterações, sei que não é o ideal, mas já estava assim, então
+Passo importante para evitar erros no build ou alertas.
+
+**OBS**: É um projeto grande que passou por diversos contextos, desenvolvedores e momentos, sei que não é o ideal, mas já estava assim, então
 não é a primeira vez que vi e acho que não vai ser a última onde arquivos de libs externas eram adicionados e
-importados na pasta source do projeto. `(src/)`. Acho importante citar isso para evitar julgamentos desnecessários.
+importados diretamente no projeto. Acho importante citar isso para evitar julgamentos desnecessários.
 
 #### **Ajustar componentes carregados por demanda**
 
@@ -126,19 +126,19 @@ Comecei removendo o `Jest`, incluindo qualquer plugin relacionado a ele, e insta
 Partilarmente nesse projeto, temos muitas configurações personalizadas no `Jest` que precisaram ser mantidas também no `Vitest`, como plugins, import aliases,
 dependências, arquivos de setup, mocks globais e pastas que queríamos excluir, como documentações.
 
-O `Vitest` utiliza o ambiente h`appy-dom`, que, segundo benchmarks, é muito mais rápido que o `jsdom`. No entanto, com ele, quase todos os nossos testes falharam.
+O `Vitest` utiliza o ambiente `happy-dom`, que, segundo benchmarks, é muito mais rápido que o `jsdom`. No entanto, com ele, quase todos os nossos testes falharam.
 Para manter a compatibilidade, decidimos continuar utilizando o `jsdom`.
 
 Fizemos um pequeno ajuste em um dos nossos arquivos globais de mock para evitar ter que substituir em milhares de testes:
 ```
-import { vi, describe } from 'vitest'
+import { vi, describe } from vitest
 
 globalThis.vi = vi
 globalThis.jest = vi
 globalThis.context = describe
 ```
 
-Com isso, mocks como jest.fn() continuaram funcionando normalmente.
+Com isso, mocks como `jest.fn()` continuaram funcionando normalmente.
 
 Como nem tudo são flores, o `Vitest` não é o `Jest` e possui muitas diferenças. Foi necessário ajustar cerca de 400 arquivos, com aproximadamente 3.000 testes
 falhando após a migração. Grande parte desses problemas era causada por particularidades do `Vitest`, como funções que se comportam de maneira diferente, ex
@@ -171,7 +171,11 @@ para testar a aplicação.
 Todos os testes automatizados que temos `Cypress`, `Vitest` e `Snapshot` estavam ok e surpreendentemente, os únicos problemas identificados durante os testes manuais foram
 erros que já existiam, e aproveitando, corrigidos muitos deles. Foi bem legal e colaborativo, com a participação de muitos outros desenvolvedores.
 
-Subimos a nova versão em produção e sem ocorrências relatadas. Esse aqui é um relatado real, baseado em uma aplicação de grande porte e utilizada diariamente por
-milhares de clínicas. O resultado final foi melhor que o planejado, porque, além de ganharmos em experiência de desenvolvimento com todos os pontos já citados aqui
+Subimos a nova versão em produção e foi sem ocorrências relatadas.
+
+
+### Concluindo
+Uma migração de um caso caso real, baseado em uma aplicação de grande porte e utilizada diariamente por
+milhares de clínicas. O resultado final foi melhor que o planejado, porque, além de ganharmos em experiência de desenvolvimento com todos os pontos já citados aqui,
 temos um ganho consideravel relacionado a perfomance agora com os chunks do bundle divididos em partes menores, não é mais necessário carregar tudo de uma vez
 para abrir a aplicação.
