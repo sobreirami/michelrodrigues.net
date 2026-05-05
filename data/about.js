@@ -1,9 +1,25 @@
 const items = [
   {
+    jobTitle: 'Tech Lead',
+    company: 'Capim',
+    companyUrl: 'https://capim.com.br',
+    startDate: '2026-03-01',
+    location: 'São Paulo, Brasil',
+  },
+  {
+    jobTitle: 'Tech Lead',
+    company: 'Economatica Brasil',
+    companyUrl: 'https://economatica.com',
+    startDate: '2025-10-01',
+    endDate: '2026-03-01',
+    location: 'São Paulo, Brasil',
+  },
+  {
     jobTitle: 'Senior Software Enginner',
     company: 'Capim',
     companyUrl: 'https://capim.com.br',
     startDate: '2024-03-01',
+    endDate: '2025-10-01',
     location: 'São Paulo, Brasil',
   },
   {
